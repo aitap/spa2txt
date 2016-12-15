@@ -1,0 +1,6 @@
+This program reads Nicolet FTIR spectral files (*.spa extension) and produces
+text files with the first line corresponding to the title, and every other line
+being in the format: wavenumber, tab, absorbance, newline.
+
+Usage: feed *.spa files as command line arguments. Files with names *.spa.txt will
+be created.

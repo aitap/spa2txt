@@ -4,3 +4,5 @@ being in the format: wavenumber, tab, absorbance, newline.
 
 Usage: feed *.spa files as command line arguments. Files with names *.spa.txt will
 be created.
+
+TODO: don't leak memory on errors, split off the float*(*)(FILE*) function to use in libraries

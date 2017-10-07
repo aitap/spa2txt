@@ -37,7 +37,7 @@ static size_t fread_le(void * ptr, size_t size, size_t nmemb, FILE* stream) {
 
 enum spa_parse_result spa_parse(
 	const char * filename,
-	char comment[256], uint32_t * num_points,
+	char comment[256], size_t * num_points,
 	float ** wavelengths, float ** intensities
 ) {
 	*wavelengths = *intensities = NULL; // make it easier to clean up
@@ -58,15 +58,18 @@ enum spa_parse_result spa_parse(
 	}
 	comment[255] = '\0';
 
+	uint32_t local_num_points;
 	// get number of points
 	if (fseek(fh,564,SEEK_SET)) {
 		ret = spa_seek_error;
 		goto cleanup;
 	}
-	if (fread_le(num_points, sizeof(uint32_t), 1, fh) != 1) {
+	if (fread_le(&local_num_points, sizeof(uint32_t), 1, fh) != 1) {
 		ret = spa_read_error;
 		goto cleanup;
 	}
+	// hopefully, your either your platform is 64-bit or you don't store 2**32 spectra in the first place
+	*num_points = local_num_points;
 
 	// get max,min wavenumber
 	float wn_maxmin[2];

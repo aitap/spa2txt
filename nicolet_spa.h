@@ -10,7 +10,7 @@ enum spa_parse_result {
 enum spa_parse_result spa_parse(
 	/* in */ const char * /* filename */,
 	/* out, opt */ char /* comment */ [256],
-	/* out */ uint32_t * /* num_points */,
+	/* out */ size_t * /* num_points */,
 	/* out */ float ** /* wavelengths */,
 	/* out */ float ** /* intensities */
 );

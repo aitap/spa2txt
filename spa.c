@@ -109,7 +109,7 @@ enum spa_parse_result spa_parse(
 		ret = spa_seek_error;
 		goto cleanup;
 	}
-	if (fread(intensities, 4, *num_points, fh) != *num_points) {
+	if (fread(*intensities, sizeof(float), *num_points, fh) != *num_points) {
 		ret = spa_read_error;
 		goto cleanup;
 	}

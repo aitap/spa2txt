@@ -1,8 +1,11 @@
 This program reads Nicolet FTIR spectral files (*.spa extension) and produces
-text files with the first line corresponding to the title, and every other line
-being in the format: wavenumber, tab, absorbance, newline.
+text files with the first line corresponding to the spectrum title/comment, and
+the following lines according to format: wavenumber, tab, absorbance, newline.
 
 Usage: feed *.spa files as command line arguments. Files with names *.spa.txt will
 be created.
 
-TODO: don't leak memory on errors, split off the float*(*)(FILE*) function to use in libraries
+Library usage:
+Define char comment[256]; size_t number_of_points; float * wavenumbers, intensities.
+Pass the comment pointer itself and pointers to the other variables to the spa_parse
+function. Don't forget to free() wavenumbers and intensities afterwards.

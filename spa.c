@@ -39,7 +39,7 @@ enum spa_parse_result spa_parse(
 	float ** wavelengths, float ** intensities
 ) {
 	*wavelengths = *intensities = NULL; // make it easier to clean up
-	enum spa_parse_result ret;
+	enum spa_parse_result ret = spa_ok;
 	FILE* fh = fopen(filename, "rb");
 	if (!fh) {
 		ret = spa_open_error;

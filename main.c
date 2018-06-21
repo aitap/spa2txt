@@ -8,13 +8,12 @@
 int main (int argc, char** argv) {
 	if (!argc) return 0;
 
-	for (argv++/*skip argv[0]*/; *argv/*argv has guaranteed NULL at the end*/; argv++) { 
+	for (argv++/*skip argv[0]*/; *argv/*argv has guaranteed NULL at the end*/; argv++) {
 		// prepare for writing
 		FILE* wfh = NULL;
 		{
 			size_t textfile_len = strlen(*argv)/*without \0*/ + 5/*.txt\0*/;
-			char* textfile = malloc(textfile_len);
-			if (!textfile) abort();
+			char textfile[textfile_len]; // assuming that <=260-character string would fit on the stack
 			if (snprintf(textfile, textfile_len, "%s%s", *argv, ".txt") >= textfile_len)
 				abort();
 			wfh = fopen(textfile, "w");
@@ -22,7 +21,6 @@ int main (int argc, char** argv) {
 				printf("%s: %s\n", textfile, strerror(errno));
 				return 1;
 			}
-			free(textfile);
 		}
 
 		// prepare for reading
@@ -47,6 +45,7 @@ int main (int argc, char** argv) {
 		}
 		free(wavelengths);
 		free(intensities);
+		fclose(wfh);
 	}
 	return 0;
 }
